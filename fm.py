@@ -13,6 +13,7 @@ async def streaming():
     async for samples in sdr.stream():
         # do something with samples
         # ...
+        print(len(samples), samples[0])
 
     # to stop streaming:
     await sdr.stop()
@@ -22,3 +23,4 @@ async def streaming():
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(streaming())
+
