@@ -10,7 +10,7 @@ class NumpyFmDemod():
     Based on the great tutorial by Fraida Fund
     https://witestlab.poly.edu/blog/capture-and-decode-fm-radio/
     '''
-    def __init__(self, frequency, sample_rate=1140000, sample_count=8192000, dc_offset=250000):
+    def __init__(self, frequency, sample_rate=1800000, sample_count=8192000, dc_offset=250000):
         self.freq = int(frequency)
         self.sample_rate = sample_rate
         self.sample_count = sample_count
@@ -27,6 +27,10 @@ class NumpyFmDemod():
     def load_samples(self, filename):
         with open(filename, 'rb') as f:
             self.samples = f.read()
+
+    def decimate(self, rate):
+        self.samples = signal.decimate(self.samples, rate)
+        self.sample_rate /= rate
 
     def samples_to_np(self):
         '''
@@ -47,8 +51,7 @@ class NumpyFmDemod():
         '''
         BANDWIDTH = 200000  # wideband FM signal is always 200kHz
         decimation_rate = int(self.sample_rate / BANDWIDTH)
-        self.samples = signal.decimate(self.samples, decimation_rate)
-        self.sample_rate /= decimation_rate
+        self.decimate(decimation_rate)
 
     def polar_discriminator(self):
         '''
@@ -72,8 +75,7 @@ class NumpyFmDemod():
         '''
         audio_freq = 44100.0
         decimation_rate = int(self.sample_rate / audio_freq)
-        self.samples = signal.decimate(self.samples, decimation_rate)
-        self.sample_rate /= decimation_rate
+        self.decimate(decimation_rate)
 
     def scale_volume(self):
         '''
@@ -94,8 +96,8 @@ class NumpyFmDemod():
         self.scale_volume()
 
 if __name__ == '__main__':
-    nfd = NumpyFmDemod(frequency=96.3e6)
+    nfd = NumpyFmDemod(frequency=91.8e6)
     nfd.capture_samples()
     #nfd.load_samples('963fm.out')
     nfd.demod()
-    nfd.output_file('wbfm-mono.raw')
+    nfd.output_file(f'wbfm-mono-{nfd.sample_rate}.raw')
