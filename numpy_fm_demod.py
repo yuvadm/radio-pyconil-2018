@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import scipy.signal as signal
 
@@ -22,13 +23,19 @@ class NumpyFmDemod():
         sdr.center_freq = self.freq - self.dc_offset
         sdr.gain = 'auto'
         self.samples = sdr.read_samples(self.sample_count)
+        self.samples_to_np()
         sdr.close()
 
     def load_samples(self, filename):
-        with open(filename, 'rb') as f:
-            self.samples = f.read()
+        self.samples = np.load(filename)
+
+    def dump_samples(self, filename):
+        np.save(filename, self.samples)
 
     def decimate(self, rate):
+        '''
+        Utility function to decimate signal by a given rate
+        '''
         self.samples = signal.decimate(self.samples, rate)
         self.sample_rate /= rate
 
@@ -83,11 +90,10 @@ class NumpyFmDemod():
         '''
         self.samples *= 10000 / np.max(np.abs(self.samples))
 
-    def output_file(self, filename):
-        self.samples.astype('int16').tofile(filename)
+    def output_file(self, filename, astype='int16'):
+        self.samples.astype(astype).tofile(filename)
 
     def demod(self):
-        self.samples_to_np()
         self.mix_down_dc_offset()
         self.lowpass_filter()
         self.polar_discriminator()
@@ -96,8 +102,25 @@ class NumpyFmDemod():
         self.scale_volume()
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print('Usage: numpy_fm_demod.py <command> [arg]\n')
+        exit()
+    else:
+        cmd = sys.argv[1]
+        try:
+            arg = sys.argv[2]
+        except:
+            arg = None
+
     nfd = NumpyFmDemod(frequency=91.8e6)
-    nfd.capture_samples()
-    #nfd.load_samples('963fm.out')
-    nfd.demod()
-    nfd.output_file(f'wbfm-mono-{nfd.sample_rate}.raw')
+    if cmd == 'load':
+        nfd.load_samples(arg)
+        nfd.demod()
+        nfd.output_file(f'wbfm-mono-{nfd.sample_rate}.raw', astype='int16')
+    elif cmd == 'capture':
+        nfd.capture_samples()
+        nfd.demod()
+        nfd.output_file(f'wbfm-mono-{nfd.sample_rate}.raw', astype='int16')
+    elif cmd == 'dump':
+        nfd.capture_samples()
+        nfd.dump_samples(arg)
