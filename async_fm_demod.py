@@ -10,7 +10,7 @@ device = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, device='default')
 device.setchannels(1)
 device.setrate(50000)
 device.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-device.setperiodsize(5520)
+device.setperiodsize(520)
 
 
 async def streaming():
@@ -18,9 +18,17 @@ async def streaming():
     sdr.sample_rate = 1.2e6
     sdr.center_freq = 91.8e6
 
+    prev = None
+
+    device.write(np.array([0] * 100000).astype('int16'))
+
     async for samples in sdr.stream():
         samples = np.array(samples).astype('complex64')
         samples = signal.decimate(samples, int(1.2e6 / 200e3))
+
+        if prev is not None:
+            samples = np.insert(samples, 0, prev)
+        prev = samples[-1]
         samples = np.angle(samples[1:] * np.conj(samples[:-1]))
 
         x = np.exp(-1 / (200e3 * 75e-6))
