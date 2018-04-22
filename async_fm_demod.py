@@ -1,17 +1,14 @@
 import asyncio
-import alsaaudio
+import pyaudio
 import numpy as np
 import scipy.signal as signal
 
 from rtlsdr import RtlSdr
 
 
-device = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK, device='default')
-device.setchannels(1)
-device.setrate(50000)
-device.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-device.setperiodsize(520)
 
+pa = pyaudio.PyAudio()
+stream = pa.open(format=pyaudio.paInt16, channels=1, rate=50000, output=True)
 
 async def streaming():
     sdr = RtlSdr()
@@ -20,7 +17,8 @@ async def streaming():
 
     prev = None
 
-    device.write(np.array([0] * 100000).astype('int16'))
+    stream.write(np.array([0] * 100000).astype('int16'))
+    stream.start_stream()
 
     async for samples in sdr.stream():
         samples = np.array(samples).astype('complex64')
@@ -37,7 +35,7 @@ async def streaming():
         samples = signal.decimate(samples, int(200e3 / 50e3))
         samples *= 10000
 
-        device.write(samples.astype('int16'))
+        stream.write(samples.astype('int16'))
 
     await sdr.stop()
     sdr.close()
