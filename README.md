@@ -1,4 +1,4 @@
-# Python RTL-SDR Playground
+# Pulling Radio Waves out of Thin Air
 
 Just some tests with binding RTL-SDR to Python programs
 
