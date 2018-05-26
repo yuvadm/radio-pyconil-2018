@@ -11915,7 +11915,6 @@ a.anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Yuval-Adam">Yuval Adam<a class="anchor-link" href="#Yuval-Adam">&#182;</a></h2><ul>
 <li>Full stack developer and systems architecture consultant</li>
-<li>But I also like to play with radios</li>
 <li><a href="https://yuv.al">https://yuv.al</a></li>
 <li>@yuvadm</li>
 </ul>
@@ -11930,20 +11929,8 @@ a.anchor-link {
 <h2 id="This-talk">This talk<a class="anchor-link" href="#This-talk">&#182;</a></h2><ul>
 <li>I never learned physics, RF engineering or signal processing</li>
 <li>But radios are pretty cool!</li>
-<li>Hopefully in 25 minutes I can show you some neat things</li>
+<li>Hopefully I can show you some neat things</li>
 <li>Slides and code @ <a href="https://github.com/yuvadm/radio-pyconil-2018">https://github.com/yuvadm/radio-pyconil-2018</a></li>
-</ul>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">&#182;</a></h2><ul>
-<li>What are radio waves?</li>
-<li>Hardware vs software radio</li>
 </ul>
 
 </div>
@@ -11958,12 +11945,21 @@ a.anchor-link {
 
 </div>
 </div>
-</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Hardware-Radio">Hardware Radio<a class="anchor-link" href="#Hardware-Radio">&#182;</a></h2><p><img src="static/radio.jpg" alt="static/radio.jpg"></p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Hardware-Radio">Hardware Radio<a class="anchor-link" href="#Hardware-Radio">&#182;</a></h2><p><img src="static/gsm.jpg" alt="static/gsm.jpg"></p>
 
 </div>
 </div>
@@ -12050,6 +12046,14 @@ a.anchor-link {
 </div>
 </div>
 </div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="GQRX">GQRX<a class="anchor-link" href="#GQRX">&#182;</a></h2>
+</div>
+</div>
+</div></section></section><section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
@@ -12064,10 +12068,8 @@ a.anchor-link {
 <span class="n">sdr</span><span class="o">.</span><span class="n">center_freq</span> <span class="o">=</span> <span class="mf">91.8e6</span>      <span class="c1"># 91,800,00 Hz frequency for the radio station</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">gain</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>             <span class="c1"># tune the gain (AKA &quot;volume&quot;) automatically</span>
 
-<span class="n">samples</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">read_samples</span><span class="p">(</span><span class="mf">1.2e6</span> <span class="o">*</span> <span class="mi">8</span><span class="p">)</span>  <span class="c1"># collect samples during 8 seconds</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">read_samples</span><span class="p">(</span><span class="mf">1.2e6</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">samples</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -12077,14 +12079,18 @@ a.anchor-link {
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load the samples into a numpy array</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Alternatively, load previously captured samples from rtl_sdr</span>
+<span class="c1"># and convert them from unsigned 8-bit samples to a complex IQ array</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;complex64&#39;</span><span class="p">)</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfile</span><span class="p">(</span><span class="s1">&#39;/tmp/samples.in&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">raw</span> <span class="o">+=</span> <span class="o">-</span><span class="mi">127</span>
+<span class="n">raw</span> <span class="o">/=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">7</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">raw</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">complex64</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12094,7 +12100,7 @@ a.anchor-link {
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We captured too many samples so we need to apply a low pass filter</span>
@@ -12103,7 +12109,7 @@ a.anchor-link {
 <span class="kn">import</span> <span class="nn">scipy.signal</span> <span class="k">as</span> <span class="nn">signal</span>
 
 <span class="n">BANDWIDTH</span> <span class="o">=</span> <span class="mf">200e3</span>
-<span class="n">DECIMATION_RATE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.2e6</span> <span class="o">/</span> <span class="n">BANDWIDTH</span><span class="p">)</span>
+<span class="n">DECIMATION_RATE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.2e6</span> <span class="o">/</span> <span class="n">BANDWIDTH</span><span class="p">)</span>  <span class="c1"># Decimation factor of 6</span>
 
 <span class="n">samples</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">decimate</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">DECIMATION_RATE</span><span class="p">)</span>
 </pre></div>
@@ -12115,10 +12121,11 @@ a.anchor-link {
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Apply the demodulation, we use a polar discriminator</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Apply the Frequency DEmodulation</span>
+<span class="c1"># We use something called a polar discriminator</span>
 
 <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">samples</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 </pre></div>
@@ -12130,10 +12137,12 @@ a.anchor-link {
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># De-emphasis filter - too &quot;sciency&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># De-emphasis filter</span>
+<span class="c1"># Even I&#39;m not sure how/why this works</span>
+
 <span class="c1"># MAKE THINGS SOUND BETTER</span>
 
 <span class="n">d</span> <span class="o">=</span> <span class="n">BANDWIDTH</span> <span class="o">*</span> <span class="mf">75e-6</span>
@@ -12149,31 +12158,45 @@ a.anchor-link {
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Decimate the signal down to something an audio driver can handle</span>
 <span class="c1"># We only catch the mono part of the signal</span>
 
 <span class="n">AUDIO_RATE</span> <span class="o">=</span> <span class="mf">50e3</span>
-<span class="n">DECIMATION_RATE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1.2e6</span> <span class="o">/</span> <span class="n">BANDWIDTH</span> <span class="o">/</span> <span class="n">AUDIO_RATE</span><span class="p">)</span>
+<span class="n">DECIMATION_RATE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">BANDWIDTH</span> <span class="o">/</span> <span class="n">AUDIO_RATE</span><span class="p">)</span>  <span class="c1"># Decimation factor of 4</span>
 
 <span class="n">samples</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">decimate</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">DECIMATION_RATE</span><span class="p">)</span>
+
+<span class="c1"># Amplify the signal volume</span>
+<span class="n">samples</span> <span class="o">*=</span> <span class="mi">10000</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div></section><section>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># HIT IT</span>
 
-<span class="n">whatever</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">alsaaudio</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">alsaaudio</span><span class="o">.</span><span class="n">PCM</span><span class="p">(</span><span class="n">alsaaudio</span><span class="o">.</span><span class="n">PCM_PLAYBACK</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">device</span><span class="o">.</span><span class="n">setchannels</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">device</span><span class="o">.</span><span class="n">setrate</span><span class="p">(</span><span class="mi">50000</span><span class="p">)</span>
+<span class="n">device</span><span class="o">.</span><span class="n">setformat</span><span class="p">(</span><span class="n">alsaaudio</span><span class="o">.</span><span class="n">PCM_FORMAT_S16_LE</span><span class="p">)</span>
+<span class="n">device</span><span class="o">.</span><span class="n">setperiodsize</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
+
+<span class="c1"># Write data in chunks</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="mi">120</span><span class="p">):</span>
+    <span class="n">device</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12187,7 +12210,10 @@ a.anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Caveats">Caveats<a class="anchor-link" href="#Caveats">&#182;</a></h2><ul>
 <li>Python, NumPy and SciPy are <strong>very</strong> good at doing fast processing of static data</li>
-<li>When handling real-time data, buffering becomes a serious issue</li>
+<li>When handling real-time data, buffering becomes a serious issue<ul>
+<li>How do you synchronize different input/ouput sample rates on the same flow?</li>
+</ul>
+</li>
 <li>GNU Radio<ul>
 <li>top-notch signal processing framework</li>
 <li>implemented many DSP primivites</li>
