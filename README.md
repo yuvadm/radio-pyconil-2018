@@ -1,6 +1,8 @@
 # Pulling Radio Waves out of Thin Air
 
-Just some tests with binding RTL-SDR to Python programs
+Code and slides for my [PyCon Israel 2018 talk](https://il.pycon.org/2018/schedule/presentation/34/)
+
+Various code that does FM demodulation in all sorts of ways.
 
 ## NumPy Demod
 
