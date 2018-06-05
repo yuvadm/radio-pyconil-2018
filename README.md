@@ -2,9 +2,14 @@
 
 Code and slides for my [PyCon Israel 2018 talk](https://il.pycon.org/2018/schedule/presentation/34/)
 
-Various code that does FM demodulation in all sorts of ways.
+## Content
 
-## NumPy Demod
+ - [Talk Slides](talk.ipynb)
+ - [Naive async FM demodulation](async_fm_demod.py)
+ - [Offline numpy FM demodulation](numpy_fm_demod.py)
+ - [FM demod GNU Radio Companion Flowgraph](fm.grc)
+
+### NumPy Demod
 
 ```bash
 $ python numpy_fm_demod.py capture
