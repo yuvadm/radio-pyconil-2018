@@ -30,7 +30,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 8)</value>
+      <value>(24, 20)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -38,7 +38,7 @@
     </param>
     <param>
       <key>generate_options</key>
-      <value>qt_gui</value>
+      <value>no_gui</value>
     </param>
     <param>
       <key>hier_block_src_path</key>
@@ -186,7 +186,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(640, 168)</value>
+      <value>(656, 196)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -233,7 +233,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1080, 176)</value>
+      <value>(1112, 204)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -292,7 +292,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(400, 124)</value>
+      <value>(432, 156)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -359,7 +359,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(872, 152)</value>
+      <value>(896, 180)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1694,7 +1694,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(152, 108)</value>
+      <value>(168, 140)</value>
     </param>
     <param>
       <key>_rotation</key>

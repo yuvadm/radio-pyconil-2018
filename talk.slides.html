@@ -11905,7 +11905,7 @@ a.anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Pulling-radio-data-out-of-thin-air">Pulling radio data out of thin air<a class="anchor-link" href="#Pulling-radio-data-out-of-thin-air">&#182;</a></h1><h2 id="Pycon-Israel-2018">Pycon Israel 2018<a class="anchor-link" href="#Pycon-Israel-2018">&#182;</a></h2>
+<h1 id="Pulling-radio-data-out-of-thin-air">Pulling radio data out of thin air<a class="anchor-link" href="#Pulling-radio-data-out-of-thin-air">&#182;</a></h1><h2 id="Yuval-Adam">Yuval Adam<a class="anchor-link" href="#Yuval-Adam">&#182;</a></h2>
 </div>
 </div>
 </div></section></section><section><section>
@@ -11915,8 +11915,9 @@ a.anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Yuval-Adam">Yuval Adam<a class="anchor-link" href="#Yuval-Adam">&#182;</a></h2><ul>
 <li>Full stack developer and systems architecture consultant</li>
+<li>Using Python for <strong>everything</strong> for 10+ years</li>
 <li><a href="https://yuv.al">https://yuv.al</a></li>
-<li>@yuvadm</li>
+<li><a href="https://twitter.com/yuvadm">@yuvadm</a></li>
 </ul>
 
 </div>
@@ -12074,7 +12075,7 @@ a.anchor-link {
 
 <span class="n">sdr</span> <span class="o">=</span> <span class="n">RtlSdr</span><span class="p">()</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">1.2e6</span>       <span class="c1"># 1,200,000 samples per second</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">center_freq</span> <span class="o">=</span> <span class="mf">91.8e6</span>      <span class="c1"># 91,800,00 Hz frequency for the radio station</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">center_freq</span> <span class="o">=</span> <span class="mf">91.8e6</span>      <span class="c1"># 91,800,000 Hz frequency for the radio station</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">gain</span> <span class="o">=</span> <span class="s1">&#39;auto&#39;</span>             <span class="c1"># tune the gain (AKA &quot;volume&quot;) automatically</span>
 
 <span class="n">samples</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">read_samples</span><span class="p">(</span><span class="mf">1.2e6</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
@@ -12150,7 +12151,7 @@ a.anchor-link {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># De-emphasis filter</span>
-<span class="c1"># Even I&#39;m not sure how/why this works</span>
+<span class="c1"># Even I&#39;m not sure exactly how/why this works</span>
 
 <span class="c1"># MAKE THINGS SOUND BETTER</span>
 
@@ -12190,7 +12191,7 @@ a.anchor-link {
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># HIT IT</span>
@@ -12219,8 +12220,8 @@ a.anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Review">Review<a class="anchor-link" href="#Review">&#182;</a></h2><ul>
 <li>Took a fixed set of samples, did some math on them</li>
-<li>Python, NumPy and SciPy are <strong>very</strong> good at doing fast processing of static data</li>
-<li>When handling real-time data, buffering becomes a serious issue<ul>
+<li>Python, NumPy and SciPy are very good at doing fast processing of <strong>static</strong> data</li>
+<li>When handling <strong>real-time</strong> data, buffering becomes a serious issue<ul>
 <li>How do you synchronize different input/ouput sample rates on the same flow?</li>
 </ul>
 </li>
@@ -12256,6 +12257,10 @@ a.anchor-link {
 <li><a href="https://osmocom.org/projects/sdr/wiki/rtl-sdr">https://osmocom.org/projects/sdr/wiki/rtl-sdr</a></li>
 <li><a href="https://www.reddit.com/r/RTLSDR/wiki/index">https://www.reddit.com/r/RTLSDR/wiki/index</a></li>
 <li>Michael Ossmann's video course - <a href="https://greatscottgadgets.com/sdr/">https://greatscottgadgets.com/sdr/</a></li>
+</ul>
+</li>
+<li>But you don't really need do know math<ul>
+<li>Lots of code is already written</li>
 </ul>
 </li>
 <li>Explore the radio waves!</li>
