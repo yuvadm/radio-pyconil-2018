@@ -2,6 +2,8 @@
 
 Code and slides for my [PyCon Israel 2018 talk](https://il.pycon.org/2018/schedule/presentation/34/)
 
+Video of the talk is online at https://www.youtube.com/watch?v=xJOFaOM2wUc
+
 ## Content
 
  - [Talk Slides](talk.ipynb)
